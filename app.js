@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send("🚀 DevOps Demo App Deployed via Jenkins - Akila testing !");
+  res.send("🚀 DevOps Demo App Deployed via Jenkins - testing !");
 });
 
 app.listen(3000, () => {
