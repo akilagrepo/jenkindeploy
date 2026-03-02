@@ -2,15 +2,15 @@ pipeline {
     agent any
 
     environment {
-        IMAGE = "demo-app"
-        CONTAINER = "demo-container"
+        IMAGE = "jenkindeploy"
+        CONTAINER = "jenkins-container"
     }
 
     stages {
 
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/YOUR_USERNAME/demo-app.git'
+                git branch: 'main', url: 'https://github.com/akilagrepo/jenkindeploy.git'
             }
         }
 
