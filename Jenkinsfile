@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE = "jenkindeploy"
+        IMAGE = "akilapradeep/jenkin-deploy-methods"
         CONTAINER = "jenkins-container"
     }
 
@@ -10,13 +10,21 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/akilagrepo/jenkindeploy.git'
+                git branch: 'master', url: 'https://github.com/akilagrepo/jenkindeploy.git'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build Image') {
             steps {
                 sh 'docker build -t $IMAGE .'
+            }
+        }
+
+        stage('Docker Login') {
+            steps {
+                withDockerRegistry([credentialsId: 'jenkin-deploy-token', url: '']) {
+                    sh 'docker push $IMAGE'
+                }
             }
         }
 
@@ -24,6 +32,7 @@ pipeline {
             steps {
                 sh '''
                 docker rm -f $CONTAINER || true
+                docker pull $IMAGE
                 docker run -d -p 3000:3000 --name $CONTAINER $IMAGE
                 '''
             }
